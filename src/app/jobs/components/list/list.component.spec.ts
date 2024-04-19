@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
 
 import { ALL_JOBS } from '../../../../mocks';
+import { JOBS_ROUTES } from '../../jobs.routes';
 import { JobsRepositoryService } from '../../repository/jobs-repository.service';
 import { JobsRepositoryServiceMock } from '../../repository/jobs-repository.service.mock';
 import { JobsService } from '../../services/jobs.service';
@@ -22,6 +24,7 @@ describe('ListComponent', () => {
 					provide: JobsRepositoryService,
 					useClass: JobsRepositoryServiceMock
 				},
+				provideRouter(JOBS_ROUTES),
 			]
 		})
 			.compileComponents();

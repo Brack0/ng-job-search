@@ -25,13 +25,23 @@ describe('JobsRepositoryService', () => {
 		expect(service).toBeTruthy();
 	});
 
+	describe('When I call getJob', () => {
+		beforeEach(() => {
+			service.getJob(0).subscribe();
+		});
+
+		it('Then I should perform GET on /jobs/:jobId', () => {
+			expect(httpClient.get).toHaveBeenCalledWith("/jobs/0");
+		});
+	});
+
 	describe('When I call getJobs', () => {
 		beforeEach(() => {
 			service.getJobs().subscribe();
 		});
 
 		it('Then I should perform GET on /jobs', () => {
-			expect(httpClient.get).toHaveBeenCalled();
+			expect(httpClient.get).toHaveBeenCalledWith("/jobs");
 		});
 	});
 

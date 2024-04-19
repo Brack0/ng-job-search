@@ -8,7 +8,7 @@ import { JobsService } from '../services/jobs.service';
 	standalone: true,
 	imports: [RouterOutlet, RouterLink, RouterLinkActive],
 	template: `
-		<h1>Find your job</h1>
+		<h1 class="center">Find your job</h1>
 		<div class="row">
 			<div class="col-sm-6"><a class="tab-link" routerLink="./list" routerLinkActive="tab-active">Jobs</a></div>
 			<div class="col-sm-6"><a class="tab-link" routerLink="./favorites" routerLinkActive="tab-active">Favorites</a></div>
@@ -22,7 +22,6 @@ import { JobsService } from '../services/jobs.service';
 			text-align: center;
 			text-decoration: none;
 			cursor: pointer;
-			color: var(--button-fore-color);
 			border: .0625rem solid var(--button-fore-color);
 		}
 

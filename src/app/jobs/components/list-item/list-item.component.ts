@@ -1,4 +1,5 @@
 import { Component, inject, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { JobListItem } from '../../services/jobs.model';
 import { JobsService } from '../../services/jobs.service';
@@ -6,6 +7,7 @@ import { JobsService } from '../../services/jobs.service';
 @Component({
 	selector: 'app-jobs-list-item',
 	standalone: true,
+	imports: [RouterLink],
 	template: `
 		<div class="row">
 			<div class="col-sm-1">
@@ -13,7 +15,7 @@ import { JobsService } from '../../services/jobs.service';
 			</div> 
 			<div class="col-sm-10">
 				<div>
-					<h2>{{ job().title }}</h2>
+					<h2><a [routerLink]="['..', job().id]">{{ job().title }}</a></h2>
 				</div>
 				<div>
 					<span class="responsive-margin">Company: {{ job().companyName }}</span>

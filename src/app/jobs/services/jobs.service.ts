@@ -1,15 +1,17 @@
 import { Injectable, computed, effect, inject, signal } from "@angular/core";
-import { map } from "rxjs";
+import { Observable, map } from "rxjs";
 
 import { Job, JobsRepositoryService } from "../repository/jobs-repository.service";
 
-import { JobListItem } from "./jobs.model";
+import { DomSanitizer } from "@angular/platform-browser";
+import { JobDetail, JobListItem } from "./jobs.model";
 
 @Injectable({
 	providedIn: "root"
 })
 export class JobsService {
 	private repository = inject(JobsRepositoryService);
+	private sanitizer = inject(DomSanitizer);
 
 	jobList = signal<JobListItem[]>([]);
 	favoriteJobList = computed(() =>
@@ -26,6 +28,16 @@ export class JobsService {
 				this.repository.saveFavorites(favoriteJobIds);
 			}
 		});
+	}
+
+	getJob(jobId: number): Observable<JobDetail> {
+		return this.repository.getJob(jobId).pipe(
+			map(job => ({
+				...job,
+				// We trust HTML from repository
+				description: this.sanitizer.bypassSecurityTrustHtml(job.description)
+			}))
+		);
 	}
 
 	fetchJobs() {

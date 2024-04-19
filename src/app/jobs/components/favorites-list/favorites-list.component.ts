@@ -11,7 +11,7 @@ import { ListItemComponent } from "../list-item/list-item.component";
 		@for (job of jobService.favoriteJobList(); track job.id) {
 			<app-jobs-list-item [job]="job" [hasFavoriteSelector]="false" />
 		} @empty {
-			<h2>No favorites selected</h2>
+			<h2 class="center">No favorites selected</h2>
 		}
 	`,
 })

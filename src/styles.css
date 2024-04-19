@@ -23,8 +23,11 @@ main {
 	max-width: 1920px;
 }
 
-h1,
-h2 {
+.center {
 	display: flex;
 	justify-content: center;
+}
+
+a, a:link, a:visited {
+	color: var(--button-fore-color);
 }

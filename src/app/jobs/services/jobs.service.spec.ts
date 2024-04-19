@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { DomSanitizer } from '@angular/platform-browser';
+import { firstValueFrom } from 'rxjs';
 
 import { ALL_JOBS } from '../../../mocks';
 import { JobsRepositoryService } from '../repository/jobs-repository.service';
@@ -9,6 +11,7 @@ import { JobsService } from './jobs.service';
 
 describe('JobsService', () => {
 	let service: JobsService;
+	let sanitizer: DomSanitizer;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -21,10 +24,23 @@ describe('JobsService', () => {
 		});
 
 		service = TestBed.inject(JobsService);
+		sanitizer = TestBed.inject(DomSanitizer);
+
 	});
 
 	it('should create', () => {
 		expect(service).toBeTruthy();
+	});
+
+	describe('When I call getJob', () => {
+		beforeEach(async () => {
+			spyOn(sanitizer, "bypassSecurityTrustHtml");
+			await firstValueFrom(service.getJob(0));
+		});
+
+		it('Then I should have a trusted description', () => {
+			expect(sanitizer.bypassSecurityTrustHtml).toHaveBeenCalled();
+		});
 	});
 
 	describe("When I don't have fetch jobs", () => {
