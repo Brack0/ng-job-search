@@ -4,4 +4,5 @@ export interface JobListItem {
 	title: string;
 	companyLogo: string;
 	reference: string;
+	isFavorite: boolean;
 }

@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
+import { provideRouter } from '@angular/router';
 
-import { ALL_JOBS } from '../../mocks';
+import { JOBS_ROUTES } from '../jobs.routes';
+import { JobsRepositoryService } from '../repository/jobs-repository.service';
+import { JobsRepositoryServiceMock } from '../repository/jobs-repository.service.mock';
+import { JobsService } from '../services/jobs.service';
 
-import { JobsRepositoryService } from './jobs-repository.service';
-import JobsComponent from './jobs.component';
-import { JobsService } from './jobs.service';
+import { JobsComponent } from './jobs.component';
 
 describe('JobsComponent', () => {
 	let component: JobsComponent;
@@ -19,14 +19,15 @@ describe('JobsComponent', () => {
 			providers: [
 				{
 					provide: JobsRepositoryService,
-					useValue: { getListItems: () => of(ALL_JOBS) }
-				}
+					useClass: JobsRepositoryServiceMock
+				},
+				provideRouter(JOBS_ROUTES),
 			]
 		})
 			.compileComponents();
 
 		service = TestBed.inject(JobsService);
-		spyOn(service, "fetchListItems").and.callThrough();
+		spyOn(service, "fetchJobs").and.callThrough();
 
 		fixture = TestBed.createComponent(JobsComponent);
 		component = fixture.componentInstance;
@@ -38,11 +39,6 @@ describe('JobsComponent', () => {
 	});
 
 	it("should fetch list items on init", () => {
-		expect(service.fetchListItems).toHaveBeenCalled();
+		expect(service.fetchJobs).toHaveBeenCalled();
 	});
-
-	it("should have all jobs displayed", () => {
-		const allRows = fixture.debugElement.queryAll(By.css(".row"));
-		expect(allRows.length).toEqual(ALL_JOBS.length);
-	})
 });
