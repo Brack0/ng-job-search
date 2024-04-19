@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 
-const DETAILED = {
+export const DETAILED = {
   75278: {
     id: 75278,
     companyName: "Scroll.io",
@@ -198,7 +198,7 @@ const DETAILED = {
   },
 };
 
-const ALL_JOBS = [
+export const ALL_JOBS = [
   {
     id: 98596,
     companyName: "Kraken",
