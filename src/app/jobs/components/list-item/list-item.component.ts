@@ -1,21 +1,26 @@
-import { Component, inject, input } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { JobListItem } from '../../services/jobs.model';
-import { JobsService } from '../../services/jobs.service';
 
 @Component({
 	selector: 'app-jobs-list-item',
 	standalone: true,
-	imports: [RouterLink],
+	imports: [NgOptimizedImage, RouterLink],
 	template: `
 		<div class="row">
 			<div class="col-sm-1">
-				<img [src]="job().companyLogo" [alt]="" class="responsive-margin"/>
+				<img
+					[ngSrc]="job().companyLogo"
+					alt=""
+					class="responsive-margin"
+					width="200"
+					height="200"/>
 			</div> 
 			<div class="col-sm-10">
 				<div>
-					<h2><a [routerLink]="['..', job().id]">{{ job().title }}</a></h2>
+					<h2><a [routerLink]="['..', job().id]" class="job-title">{{ job().title }}</a></h2>
 				</div>
 				<div>
 					<span class="responsive-margin">Company: {{ job().companyName }}</span>
@@ -24,13 +29,13 @@ import { JobsService } from '../../services/jobs.service';
 			</div>
 			@if (hasFavoriteSelector()) {
 				<div class="col-sm-1">
-					<span 
-						class="icon-star"
+					<span
 						[class.active]="job().isFavorite"
+						class="icon-star"
 						id="star-{{ job().id }}"
 						tabindex="0"
-						(click)="toggleFavorite()"
-						(keyup)="toggleFavorite()"></span>
+						(click)="toggleFavorite.emit()"
+						(keyup)="toggleFavorite.emit()"></span>
 				</div>
 			}
 		</div>
@@ -46,12 +51,9 @@ import { JobsService } from '../../services/jobs.service';
 	`
 })
 export class ListItemComponent {
-	jobService = inject(JobsService);
-
 	job = input.required<JobListItem>();
 	hasFavoriteSelector = input<boolean>(false);
 
-	toggleFavorite() {
-		this.jobService.toggleFavorite(this.job().id)
-	}
+	@Output()
+	toggleFavorite = new EventEmitter<void>();
 }

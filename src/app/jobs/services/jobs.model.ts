@@ -9,7 +9,7 @@ export interface JobListItem {
 	isFavorite: boolean;
 }
 
-export interface JobDetail {
+export interface JobDetails {
 	id: number;
 	companyName: string;
 	title: string;

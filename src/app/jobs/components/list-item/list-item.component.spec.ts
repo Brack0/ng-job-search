@@ -55,21 +55,33 @@ describe('ListItemComponent', () => {
 			expect(fixture.debugElement.query(By.css(".icon-star"))).toBeTruthy();
 		});
 
-		it('Then should be selected as a favorite', () => {
-			expect(fixture.debugElement.query(By.css(".active"))).toBeTruthy();
+		describe("And job is favorite", () => {
+			it('Then should be selected as a favorite', () => {
+				expect(fixture.debugElement.query(By.css(".active"))).toBeTruthy();
+			});
 		});
 
-		describe("And I click to the favorite selector", () => {
+		describe("And job is not favorite", () => {
 			beforeEach(() => {
-				(fixture.debugElement.query(By.css(".icon-star")).nativeElement as HTMLSpanElement).click();
+				fixture.componentRef.setInput('job', service.jobList()[1]);
 				fixture.detectChanges();
-			});
+			})
 
-
-			it('Then it should be not selected as a favorite', () => {
+			it('Then should not be selected as a favorite', () => {
 				expect(fixture.debugElement.query(By.css(".active"))).toBeFalsy();
 			});
-		})
+		});
+
+		describe("And I click on the favorite selector", () => {
+			beforeEach(() => {
+				spyOn(component.toggleFavorite, "emit");
+				(fixture.debugElement.query(By.css(".icon-star")).nativeElement as HTMLElement).click();
+			});
+
+			it('Then it should bubble up to parent component', () => {
+				expect(component.toggleFavorite.emit).toHaveBeenCalled();
+			});
+		});
 	})
 
 });

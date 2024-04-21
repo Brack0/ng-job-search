@@ -1,19 +1,21 @@
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 
-import { ALL_JOBS } from "../../../mocks";
+import { ALL_JOBS, DETAILED } from "../../../mocks";
 
-export class JobsRepositoryServiceMock {
-	getJob() {
-		return of(ALL_JOBS[0]);
+import { Job, JobInfo, JobsRepository } from "./jobs-repository.model";
+
+export class JobsRepositoryServiceMock implements JobsRepository {
+	getJobDetails(): Observable<JobInfo> {
+		return of(DETAILED['98596']);
 	}
 
-	getJobs() {
+	getJobs(): Observable<Job[]> {
 		return of(ALL_JOBS);
 	}
 
-	getFavorites() {
+	getFavorites(): number[] {
 		return [ALL_JOBS[0].id];
 	}
 
-	saveFavorites() { }
+	saveFavorites(): void { }
 }

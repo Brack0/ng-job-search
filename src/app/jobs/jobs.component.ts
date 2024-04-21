@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
-import { JobsService } from '../services/jobs.service';
+import { JobsService } from './services/jobs.service';
 
 @Component({
 	selector: 'app-jobs',

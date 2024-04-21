@@ -32,10 +32,10 @@ describe('JobsService', () => {
 		expect(service).toBeTruthy();
 	});
 
-	describe('When I call getJob', () => {
+	describe('When I call getJobDetails', () => {
 		beforeEach(async () => {
 			spyOn(sanitizer, "bypassSecurityTrustHtml");
-			await firstValueFrom(service.getJob(0));
+			await firstValueFrom(service.getJobDetails(0));
 		});
 
 		it('Then I should have a trusted description', () => {

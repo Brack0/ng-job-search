@@ -2,37 +2,15 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { Observable } from "rxjs";
 
-export interface Job {
-	id: number;
-	companyName: string;
-	title: string;
-	companyLogo: string;
-	reference: string;
-}
-
-type UnsafeHTML = string;
-
-export interface JobInfo {
-	id: number;
-	companyName: string;
-	title: string;
-	companyLogo: string;
-	reference: string;
-	location: string;
-	industries: string[],
-	types: string[],
-	description: UnsafeHTML,
-	publishDate: string,
-}
-
+import { Job, JobInfo, JobsRepository } from "./jobs-repository.model";
 
 @Injectable({
 	providedIn: "root"
 })
-export class JobsRepositoryService {
+export class JobsRepositoryService implements JobsRepository {
 	private http = inject(HttpClient);
 
-	getJob(jobId: number) {
+	getJobDetails(jobId: number): Observable<JobInfo> {
 		return this.http.get<JobInfo>(`/jobs/${jobId}`);
 	}
 
@@ -44,7 +22,7 @@ export class JobsRepositoryService {
 		return JSON.parse(localStorage.getItem('favorites') ?? "[]");
 	}
 
-	saveFavorites(favoriteJobIds: number[]) {
+	saveFavorites(favoriteJobIds: number[]): void {
 		localStorage.setItem('favorites', JSON.stringify(favoriteJobIds));
 	}
 }

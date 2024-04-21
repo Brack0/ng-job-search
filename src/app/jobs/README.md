@@ -4,6 +4,7 @@
 
 ```txt
 jobs.routes.ts
+jobs.component.ts
 ```
 
 ## Structure

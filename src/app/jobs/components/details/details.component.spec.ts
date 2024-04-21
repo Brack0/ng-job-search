@@ -1,22 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 import { JOBS_ROUTES } from '../../jobs.routes';
 import { JobsRepositoryService } from '../../repository/jobs-repository.service';
 import { JobsRepositoryServiceMock } from '../../repository/jobs-repository.service.mock';
 import { JobsService } from '../../services/jobs.service';
 
-import { DetailComponent } from './detail.component';
+import { DetailsComponent } from './details.component';
 
 
-describe('DetailComponent', () => {
-	let component: DetailComponent;
-	let fixture: ComponentFixture<DetailComponent>;
+describe('DetailsComponent', () => {
+	let component: DetailsComponent;
+	let fixture: ComponentFixture<DetailsComponent>;
 	let service: JobsService;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [DetailComponent],
+			imports: [DetailsComponent],
 			providers: [
 				{
 					provide: JobsRepositoryService,
@@ -29,9 +30,9 @@ describe('DetailComponent', () => {
 
 		service = TestBed.inject(JobsService);
 
-		fixture = TestBed.createComponent(DetailComponent);
+		fixture = TestBed.createComponent(DetailsComponent);
 		component = fixture.componentInstance;
-		fixture.componentRef.setInput('jobDetail', service.getJob(0));
+		fixture.componentRef.setInput('jobDetails', await firstValueFrom(service.getJobDetails(0)));
 		fixture.detectChanges();
 	});
 

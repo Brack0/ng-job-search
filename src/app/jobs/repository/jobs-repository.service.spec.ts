@@ -25,9 +25,9 @@ describe('JobsRepositoryService', () => {
 		expect(service).toBeTruthy();
 	});
 
-	describe('When I call getJob', () => {
+	describe('When I call getJobDetails', () => {
 		beforeEach(() => {
-			service.getJob(0).subscribe();
+			service.getJobDetails(0).subscribe();
 		});
 
 		it('Then I should perform GET on /jobs/:jobId', () => {

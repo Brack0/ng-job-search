@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 
-import { DetailComponent } from './components/detail/detail.component';
+import { DetailsComponent } from './components/details/details.component';
 import { FavoritesListComponent } from './components/favorites-list/favorites-list.component';
-import { JobsComponent } from './components/jobs.component';
 import { ListComponent } from './components/list/list.component';
+import { JobsComponent } from './jobs.component';
 import { JobsService } from './services/jobs.service';
 
 export const JOBS_ROUTES: Routes = [
@@ -16,11 +16,11 @@ export const JOBS_ROUTES: Routes = [
 			{ path: "favorites", component: FavoritesListComponent },
 			{
 				path: ":id",
-				component: DetailComponent,
+				component: DetailsComponent,
 				resolve: {
-					jobDetail: (route: ActivatedRouteSnapshot) =>
-						inject(JobsService).getJob(parseInt(route.paramMap.get('id')!, 10))
-				}
+					jobDetails: (route: ActivatedRouteSnapshot) =>
+						inject(JobsService).getJobDetails(parseInt(route.paramMap.get('id')!, 10))
+				},
 			},
 			{ path: '', redirectTo: 'list', pathMatch: 'full' },
 		]
